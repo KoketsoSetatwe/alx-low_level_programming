@@ -1,17 +1,21 @@
-#include <_putchar.h>
+#include "main.h"
 
-void _putchar(char c)
-{
-_putchar(c);
-}
-
+/**
+ * main - A print statement followed by a new line.
+ *
+ * Return: Always 0.
+ */
 int main(void)
 {
-char str[] = "_putchar\n";
-int i;
-for (i = 0; str[i] != '\0'; i++)
-{
-_putchar(str[i]);
-}
-return 0; {
+	_putchar('_');
+	_putchar('p');
+	_putchar('u');
+	_putchar('t');
+	_putchar('c');
+	_putchar('h');
+	_putchar('a');
+	_putchar('r');
+	_putchar('\n');
+
+	return (0);
 }
