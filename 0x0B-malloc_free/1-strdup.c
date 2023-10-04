@@ -1,17 +1,24 @@
-	ptr = malloc(size * sizeof(char));
+#include <stdlib.h>
 
-	i = 0;
-	while (x < size)
-	while (i < size)
-	{
-		if (ptr == NULL)
-		{
-			return (NULL);
-	}
-		ptr[x] = str[x];
-		x++;
-		ptr[i] = str[i];
-		i++;
-	}
-	return (ptr);
+char *_strdup(const char *str)
+{
+int i, len = 0;
+char *ptr;
+
+/* Get the length of the string */
+while (str[len])
+len++;
+
+/* Allocate memory */
+ptr = malloc(len * sizeof(char));
+
+/* If malloc failed */
+if (!ptr)
+return NULL;
+
+/* Copy the string */
+for (i = 0; i < len; i++)
+ptr[i] = str[i];
+
+return ptr;
 }
