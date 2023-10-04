@@ -11,7 +11,7 @@
  * Return: Pointer to the array, or  0 if it fails
  */
 
-char *create_array(unsigned int size, char c);
+char *create_array(unsigned int size, char c)
 {
 unsigned int i;
 char *s;
