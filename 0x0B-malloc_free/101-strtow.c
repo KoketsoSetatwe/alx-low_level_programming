@@ -12,28 +12,39 @@
  */
 char *str_concat(char *s1, char *s2)
 {
-	char *concat_str;
-	int index, concat_index = 0, len = 0;
+    char *concat_str;
+    int len1 = 0, len2 = 0, index, concat_index = 0;
 
-	if (s1 == NULL)
-		s1 = "";
+    if (s1 == NULL)
+        s1 = "";
 
-	if (s2 == NULL)
-		s2 = "";
+    if (s2 == NULL)
+        s2 = "";
 
-	for (index = 0; s1[index] || s2[index]; index++)
-		len++;
+    // Calculate the length of s1
+    for (index = 0; s1[index]; index++)
+        len1++;
 
-	concat_str = malloc(sizeof(char) * len);
+    // Calculate the length of s2
+    for (index = 0; s2[index]; index++)
+        len2++;
 
-	if (concat_str == NULL)
-		return (NULL);
+    // Allocate memory: combined length of s1 and s2 plus 1 for the null terminator
+    concat_str = malloc(sizeof(char) * (len1 + len2 + 1));
 
-	for (index = 0; s1[index]; index++)
-		concat_str[concat_index++] = s1[index];
+    if (concat_str == NULL)
+        return NULL;
 
-	for (index = 0; s2[index]; index++)
-		concat_str[concat_index++] = s2[index];
+    // Copy s1 to concat_str
+    for (index = 0; s1[index]; index++)
+        concat_str[concat_index++] = s1[index];
 
-	return (concat_str);
+    // Copy s2 to concat_str
+    for (index = 0; s2[index]; index++)
+        concat_str[concat_index++] = s2[index];
+
+    // Null-terminate the concatenated string
+    concat_str[concat_index] = '\0';
+
+    return concat_str;
 }
