@@ -11,19 +11,38 @@
  */
 int sum_them_all(const unsigned int n, ...)
 {
-va_list ap;
-unsigned int num, sum = 0;
+	va_list nums;
+	unsigned int index, sum = 0;
 
+	va_start(nums, n);
 
-va_start(ap, n);
+	for (index = 0; index < n; index++)
+		sum += va_arg(nums, int);
 
+	va_end(nums);
 
-for (num = 0; num < n; num++)
-sum += va_arg(ap, int);
+	return (sum);
+#ifndef DOG_H
+#define DOG_H
 
+/**
+ * struct dog - A dog's basic attributes
+ * @name: The name of the dog
+ * @age: The age of the dog
+ * @owner: The owner of the dog
+ * Description: Dog's basic attributes
+ */
+struct dog
+{
+char *name;
+float age;
+char *owner;
 
-va_end(ap);
+};
 
+typedef struct dog dog_t;
 
-return (sum);
+/* any other function declarations or structures go here */
+
+#endif /* DOG_H */
 }
