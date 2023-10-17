@@ -1,50 +1,102 @@
 #include "main.h"
 #include <stdlib.h>
 
+int word_len(char *str);
+int count_words(char *str);
+char **strtow(char *str);
+
 /**
- * str_concat - Concatenates two strings.
- * @s1: The string to be concatenated upon.
- * @s2: The string to be concatenated to s1.
+ * word_len - Locates the index marking the end of the
+ *            first word contained within a string.
+ * @str: The string to be searched.
  *
- * Return: If concatenation fails - NULL.
- *         Otherwise - a pointer the newly-allocated space in memory
- *                     containing the concatenated strings.
+ * Return: The index marking the end of the initial word pointed to by str.
  */
-char *str_concat(char *s1, char *s2)
+int word_len(char *str)
 {
-    char *concat_str;
-    int len1 = 0, len2 = 0, index, concat_index = 0;
+	int i = 0, len = 0;
 
-    if (s1 == NULL)
-        s1 = "";
+	while (*(str + i) && *(str + i) != ' ')
+	{
+		len++;
+		i++;
+	}
 
-    if (s2 == NULL)
-        s2 = "";
+	return (len);
+}
 
-    // Calculate the length of s1
-    for (index = 0; s1[index]; index++)
-        len1++;
+/**
+ * count_words - Counts the number of words contained within a string.
+ * @str: The string to be searched.
+ *
+ * Return: The number of words contained within str.
+ */
+int count_words(char *str)
+{
+	int i = 0, words = 0, len = 0;
 
-    // Calculate the length of s2
-    for (index = 0; s2[index]; index++)
-        len2++;
+	for (i = 0; *(str + i); i++)
+		len++;
 
-    // Allocate memory: combined length of s1 and s2 plus 1 for the null terminator
-    concat_str = malloc(sizeof(char) * (len1 + len2 + 1));
+	for (i = 0; i < len; i++)
+	{
+		if (*(str + i) != ' ')
+		{
+			words++;
+			i += word_len(str + i);
+		}
+	}
 
-    if (concat_str == NULL)
-        return NULL;
+	return (words);
+}
 
-    // Copy s1 to concat_str
-    for (index = 0; s1[index]; index++)
-        concat_str[concat_index++] = s1[index];
+/**
+ * strtow - Splits a string into words.
+ * @str: The string to be split.
+ *
+ * Return: If str = NULL, str = "", or the function fails - NULL.
+ *         Otherwise - a pointer to an array of strings (words).
+ */
+char **strtow(char *str)
+{
+	char **strings;
+	int i = 0, words, w, letters, l;
 
-    // Copy s2 to concat_str
-    for (index = 0; s2[index]; index++)
-        concat_str[concat_index++] = s2[index];
+	if (str == NULL || str[0] == '\0')
+		return (NULL);
 
-    // Null-terminate the concatenated string
-    concat_str[concat_index] = '\0';
+	words = count_words(str);
+	if (words == 0)
+		return (NULL);
 
-    return concat_str;
+	strings = malloc(sizeof(char *) * (words + 1));
+	if (strings == NULL)
+		return (NULL);
+
+	for (w = 0; w < words; w++)
+	{
+		while (str[i] == ' ')
+			i++;
+
+		letters = word_len(str + i);
+
+		strings[w] = malloc(sizeof(char) * (letters + 1));
+
+		if (strings[w] == NULL)
+		{
+			for (; w >= 0; w--)
+				free(strings[w]);
+
+			free(strings);
+			return (NULL);
+		}
+
+		for (l = 0; l < letters; l++)
+			strings[w][l] = str[i++];
+
+		strings[w][l] = '\0';
+	}
+	strings[w] = NULL;
+
+	return (strings);
 }
