@@ -1,21 +1,40 @@
 #include "lists.h"
+#include <string.h>
 
 /**
- * list_len - Finds the number of elements in
- *            a linked list_t list.
- * @h: The linked list_t list.
+ * add_node - Adds a new node at the beginning
+ *            of a list_t list.
+ * @head: A pointer to the head of the list_t list.
+ * @str: The string to be added to the list_t list.
  *
- * Return: The number of elements in h.
+ * Return: If the function fails - NULL.
+ *         Otherwise - the address of the new element.
  */
-size_t list_len(const list_t *h)
+list_t *add_node(list_t **head, const char *str)
 {
-	size_t elements = 0;
+	char *dup;
+	int len;
+	list_t *new;
 
-	while (h)
+	new = malloc(sizeof(list_t));
+	if (new == NULL)
+		return (NULL);
+
+	dup = strdup(str);
+	if (dup == NULL)
 	{
-		elements++;
-		h = h->next;
+		free(new);
+		return (NULL);
 	}
 
-	return (elements);
+	for (len = 0; str[len];)
+		len++;
+
+	new->str = dup;
+	new->len = len;
+	new->next = *head;
+
+	*head = new;
+
+	return (new);
 }
